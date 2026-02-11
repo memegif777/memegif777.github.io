@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>八千代的小屋</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #E0F7FA;
+            background-image: radial-gradient(#FFFFFF 2px, transparent 2px);
+            background-size: 20px 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 左侧导航栏 */
+        .sidebar {
+            width: 200px;
+            background-color: #FFF3E0;
+            border: 2px solid #FF5252;
+            border-radius: 5px;
+            padding: 15px;
+            margin-right: 20px;
+            position: relative;
+        }
+        
+        .sidebar h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .sidebar .menu-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+        }
+        
+        .sidebar ul li {
+            margin-bottom: 8px;
+        }
+        
+        .sidebar ul li a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 5px 10px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar ul li a:hover {
+            background-color: #FFEBEE;
+            color: #FF5252;
+            transform: translateX(5px);
+        }
+        
+        .sidebar .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* 右侧内容区域 */
+        .content {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        /* 顶部标题栏 */
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        
+        .header .decorative {
+            font-size: 18px;
+            margin: 0 10px;
+            color: #FF5252;
+        }
+        
+        .header .subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        /* 欢迎信息栏 */
+        .welcome-bar {
+            background-color: #26A69A;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        /* 主内容区域 */
+        .main-content {
+            background-color: white;
+            border: 1px solid #E0E0E0;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .main-content .info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .main-content .info p {
+            margin-bottom: 10px;
+        }
+        
+        .main-content .info .visitor-count {
+            font-weight: bold;
+            color: #FF5252;
+        }
+        
+        /* 内容卡片 */
+        .content-card {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .content-card .left {
+            flex: 2;
+            margin-right: 20px;
+        }
+        
+        .content-card .left img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        
+        .content-card .right {
+            flex: 1;
+            background-color: #F5F5F5;
+            border-radius: 5px;
+            padding: 15px;
+        }
+        
+        .content-card .right ul {
+            list-style: none;
+        }
+        
+        .content-card .right ul li {
+            margin-bottom: 8px;
+        }
+        
+        .content-card .right ul li a {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .content-card .right ul li a:hover {
+            color: #FF5252;
+        }
+        
+        /* 公告区域 */
+        .announcement {
+            background-color: white;
+            border: 1px solid #E0E0E0;
+            border-radius: 5px;
+            padding: 20px;
+        }
+        
+        .announcement h3 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .announcement p {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        /* 底部导航 */
+        .bottom-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .bottom-nav a {
+            margin: 0 10px;
+            color: #333;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .bottom-nav a:hover {
+            background-color: #E0F7FA;
+            color: #26A69A;
+        }
+        
+        /* 内容切换区域 */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .content-card {
+                flex-direction: column;
+            }
+            
+            .content-card .left {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 左侧导航栏 -->
+        <div class="sidebar">
+            <h2>八千代的小屋</h2>
+            <div class="menu-title">- 菜单 -</div>
+            <ul>
+                <li><a href="#" data-section="home">TOP/首页</a></li>
+                <li><a href="#" data-section="intro">自我介绍</a></li>
+                <li><a href="#" data-section="gallery">画廊</a></li>
+                <li><a href="#" data-section="bbs">绘板 / BBS</a></li>
+                <li><a href="#" data-section="links">链接</a></li>
+                <li><a href="#" data-section="diary">草 diary</a></li>
+                <li><a href="#" data-section="others">其他链接</a></li>
+            </ul>
+            <div class="footer">
+                <p>欢迎光临！本站点站长「八千代」运营，是一个以二次创作为主的插画交流网站</p>
+            </div>
+        </div>
+        
+        <!-- 右侧内容区域 -->
+        <div class="content">
+            <!-- 顶部标题栏 -->
+            <div class="header">
+                <h1>
+                    <span class="decorative">＊＊</span>
+                    八千代的小屋
+                    <span class="decorative">＊＊</span>
+                </h1>
+                <div class="subtitle">★★★欢迎光临！本站点站长「八千代」运营，是一个以二次创作为主的插画交流网站★★★</div>
+            </div>
+            
+            <!-- 欢迎信息栏 -->
+            <div class="welcome-bar">
+                擅自转载使用本站内容 ★★★★★ 您是第 <span id="visitor-count">000650</span> 位访客！
+            </div>
+            
+            <!-- 主内容区域 -->
+            <div class="main-content">
+                <div class="info">
+                    <p>新年新番号（沿名前）：浣诺西汀 [绘画] 站点 [绘板] BBS系统</p>
+                </div>
+                
+                <div class="content-card">
+                    <div class="left">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20cartoon%20rabbit%20in%20underwater%20scene%20with%20coral%20and%20fish%2C%20speech%20bubble%20saying%20%22eight%20thousand%20generations%20cabin%22%2C%20anime%20style%2C%20light%20blue%20background&image_size=square" alt="八千代的小屋">
+                    </div>
+                    <div class="right">
+                        <ul>
+                            <li>• 2003/10/13 | 「绘板」新增了7段跳！</li>
+                            <li>• 2003/10/12 | 「友情链接」添加了新的链接！</li>
+                            <li>• 2003/10/11 | 更新了 Web 柏的新的献礼！</li>
+                            <li>• 2003/10/10 | 首页设计大翻新！</li>
+                        </ul>
+                        <p style="margin-top: 15px; text-align: center;"><a href="#">Web 柏会</a></p>
+                        <p style="text-align: center;">★联合条码举办日期请点击这里★</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 公告区域 -->
+            <div class="announcement">
+                <h3>◆◆公告事项◆◆</h3>
+                <p>天气渐渐冷了，神户头人们过得还好吗？</p>
+                <p>《八千代的小屋》进行更新中，会不定期添加新的气息哦～<br>近期因忙乱，所以更新可能不会太频繁，请见谅。<br>互换友链申请中，请在BBS系统报！</p>
+                
+                <div class="bottom-nav">
+                    <a href="#">英国</a>
+                    <a href="#">信息</a>
+                    <a href="#">说明</a>
+                </div>
+                
+                <p style="margin-top: 15px; text-align: center;">道具 | <a href="#">橡皮擦哪里？</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 页面加载时初始化
+        window.addEventListener('load', function() {
+            updateVisitorCount();
+            addDecorativeChars();
+            initSidebarLinks();
+        });
+        
+        // 初始化左侧导航栏链接事件
+        function initSidebarLinks() {
+            // 获取左侧导航栏中的所有可点击元素
+            const sidebarLinks = document.querySelectorAll('.sidebar a');
+            
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-section');
+                    
+                    // 移除所有活动状态
+                    document.querySelectorAll('.sidebar ul li a').forEach(a => {
+                        a.classList.remove('active');
+                    });
+                    
+                    // 添加当前活动状态
+                    this.classList.add('active');
+                    
+                    // 执行页面切换动画
+                    performPageTransition(section);
+                });
+            });
+        }
+        
+        // 执行页面切换动画
+        function performPageTransition(section) {
+            // 获取所有需要动画的元素
+            const contentElements = document.querySelectorAll('.content > *');
+            
+            // 为所有内容元素添加淡出动画
+            contentElements.forEach(element => {
+                element.style.transition = 'all 0.4s ease-in-out';
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(10px)';
+            });
+            
+            // 动画完成后模拟页面跳转
+            setTimeout(() => {
+                // 根据section加载不同内容
+                loadSectionContent(section);
+                
+                // 为所有内容元素添加淡入动画
+                contentElements.forEach(element => {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                });
+                
+                // 模拟页面跳转（实际项目中可以替换为真实的页面跳转）
+                console.log(`跳转到${section}页面`);
+            }, 400);
+        }
+        
+        // 根据section加载不同内容
+        function loadSectionContent(section) {
+            const mainContent = document.querySelector('.main-content');
+            
+            switch(section) {
+                case 'gallery':
+                    mainContent.innerHTML = `
+                        <div class="gallery-container">
+                            <h2 style="text-align: center; margin-bottom: 20px;">画廊</h2>
+                            <div class="upload-btn-container" style="text-align: right; margin-bottom: 20px;">
+                                <input type="file" id="file-input" accept="image/*" style="display: none;">
+                                <button id="upload-btn" style="background-color: #26A69A; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">
+                                    <span style="font-size: 20px;">+</span> 上传图片
+                                </button>
+                                <div id="upload-progress" style="margin-top: 10px; display: none;">
+                                    <div style="font-size: 14px; margin-bottom: 5px;">上传进度：</div>
+                                    <div style="width: 100%; height: 20px; background-color: #E0E0E0; border-radius: 10px; overflow: hidden;">
+                                        <div id="progress-bar" style="width: 0%; height: 100%; background-color: #4CAF50; transition: width 0.3s ease;"></div>
+                                    </div>
+                                    <div id="progress-text" style="font-size: 12px; margin-top: 5px; text-align: center;">0%</div>
+                                </div>
+                                <div id="upload-error" style="margin-top: 10px; color: #FF5252; font-size: 12px; display: none;"></div>
+                            </div>
+                            <div id="gallery-grid" class="gallery-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+                                <!-- 画廊图片将在这里动态添加 -->
+                            </div>
+                        </div>
+                    `;
+                    
+                    // 初始化画廊
+                    initGallery();
+                    break;
+                default:
+                    // 保持默认内容
+                    mainContent.innerHTML = `
+                        <div class="info">
+                            <p>新年新番号（沿名前）：浣诺西汀 [绘画] 站点 [绘板] BBS系统</p>
+                        </div>
+                        
+                        <div class="content-card">
+                            <div class="left">
+                                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20cartoon%20rabbit%20in%20underwater%20scene%20with%20coral%20and%20fish%2C%20speech%20bubble%20saying%20%22eight%20thousand%20generations%20cabin%22%2C%20anime%20style%2C%20light%20blue%20background&image_size=square" alt="八千代的小屋">
+                            </div>
+                            <div class="right">
+                                <ul>
+                                    <li>• 2003/10/13 | 「绘板」新增了7段跳！</li>
+                                    <li>• 2003/10/12 | 「友情链接」添加了新的链接！</li>
+                                    <li>• 2003/10/11 | 更新了 Web 柏的新的献礼！</li>
+                                    <li>• 2003/10/10 | 首页设计大翻新！</li>
+                                </ul>
+                                <p style="margin-top: 15px; text-align: center;"><a href="#">Web 柏会</a></p>
+                                <p style="text-align: center;">★联合条码举办日期请点击这里★</p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+            }
+        }
+        
+        // 初始化画廊
+        function initGallery() {
+            // 示例画廊数据
+            const galleryItems = [
+                { id: 1, url: "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=anime%20style%20illustration%20of%20a%20cute%20rabbit%2C%20digital%20art&image_size=square", date: "2026-02-10" },
+                { id: 2, url: "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=anime%20style%20illustration%20of%20a%20cat%2C%20digital%20art&image_size=square", date: "2026-02-09" },
+                { id: 3, url: "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=anime%20style%20illustration%20of%20a%20dog%2C%20digital%20art&image_size=square", date: "2026-02-08" }
+            ];
+            
+            const galleryGrid = document.getElementById('gallery-grid');
+            
+            // 清空画廊
+            galleryGrid.innerHTML = '';
+            
+            // 添加画廊项
+            galleryItems.forEach(item => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                galleryItem.style = `
+                    background-color: white;
+                    border: 1px solid #E0E0E0;
+                    border-radius: 5px;
+                    padding: 10px;
+                    text-align: center;
+                    transition: all 0.3s ease;
+                `;
+                
+                galleryItem.innerHTML = `
+                    <div style="position: relative; width: 100%; height: 150px; overflow: hidden; border-radius: 5px; margin-bottom: 10px; cursor: pointer;" class="gallery-image-container">
+                        <img src="${item.url}" alt="作品${item.id}" style="width: 100%; height: 100%; object-fit: contain; background-color: #f5f5f5;">
+                    </div>
+                    <div style="font-size: 12px; color: #666;">${item.date}</div>
+                `;
+                
+                galleryGrid.appendChild(galleryItem);
+            });
+            
+            // 添加上传按钮事件
+            const uploadBtn = document.getElementById('upload-btn');
+            const fileInput = document.getElementById('file-input');
+            
+            if (uploadBtn && fileInput) {
+                uploadBtn.addEventListener('click', function() {
+                    fileInput.click();
+                });
+                
+                // 文件选择事件
+                fileInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        handleFileUpload(file);
+                    }
+                });
+            }
+            
+            // 添加图片点击事件
+            setTimeout(() => {
+                const imageContainers = document.querySelectorAll('.gallery-image-container');
+                imageContainers.forEach(container => {
+                    container.addEventListener('click', function() {
+                        const img = this.querySelector('img');
+                        if (img) {
+                            openImageModal(img.src);
+                        }
+                    });
+                });
+            }, 100);
+        }
+        
+        // 创建图片模态框
+        function createImageModal() {
+            // 检查模态框是否已存在
+            if (document.getElementById('image-modal')) {
+                return;
+            }
+            
+            const modal = document.createElement('div');
+            modal.id = 'image-modal';
+            modal.style = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            `;
+            
+            modal.innerHTML = `
+                <div style="position: relative; max-width: 90%; max-height: 90%;">
+                    <img id="modal-image" src="" alt="放大图片" style="max-width: 100%; max-height: 80vh; object-fit: contain;">
+                    <button id="close-modal" style="position: absolute; top: -40px; right: -40px; background-color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 20px; display: flex; justify-content: center; align-items: center;">
+                        ×
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // 添加关闭按钮事件
+            const closeBtn = document.getElementById('close-modal');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', closeImageModal);
+            }
+            
+            // 点击模态框背景关闭
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeImageModal();
+                }
+            });
+        }
+        
+        // 打开图片模态框
+        function openImageModal(imageUrl) {
+            // 创建模态框
+            createImageModal();
+            
+            const modal = document.getElementById('image-modal');
+            const modalImage = document.getElementById('modal-image');
+            
+            if (modal && modalImage) {
+                modalImage.src = imageUrl;
+                modal.style.opacity = '1';
+                modal.style.visibility = 'visible';
+                document.body.style.overflow = 'hidden'; // 防止背景滚动
+            }
+        }
+        
+        // 关闭图片模态框
+        function closeImageModal() {
+            const modal = document.getElementById('image-modal');
+            if (modal) {
+                modal.style.opacity = '0';
+                modal.style.visibility = 'hidden';
+                document.body.style.overflow = ''; // 恢复背景滚动
+            }
+        }
+        
+        // 处理文件上传
+        function handleFileUpload(file) {
+            // 验证文件类型
+            const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            if (!validTypes.includes(file.type)) {
+                showError('不支持的文件类型，请上传JPG、PNG、GIF或WebP格式的图片');
+                return;
+            }
+            
+            // 验证文件大小（限制为5MB）
+            const maxSize = 5 * 1024 * 1024;
+            if (file.size > maxSize) {
+                showError('文件大小超过限制，请上传小于5MB的图片');
+                return;
+            }
+            
+            // 显示上传进度
+            showProgress();
+            
+            // 模拟上传过程
+            simulateFileUpload(file);
+        }
+        
+        // 模拟文件上传
+        function simulateFileUpload(file) {
+            let progress = 0;
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            
+            // 创建文件读取器用于预览
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageUrl = e.target.result;
+                
+                // 模拟上传进度
+                const interval = setInterval(() => {
+                    progress += 5;
+                    updateProgress(progress);
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        
+                        // 上传完成后添加到画廊
+                        setTimeout(() => {
+                            addToGallery(imageUrl);
+                            hideProgress();
+                            showSuccess('图片上传成功！');
+                        }, 500);
+                    }
+                }, 100);
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        // 添加图片到画廊
+        function addToGallery(imageUrl) {
+            const galleryGrid = document.getElementById('gallery-grid');
+            const newItem = {
+                id: Date.now(),
+                url: imageUrl,
+                date: new Date().toISOString().split('T')[0]
+            };
+            
+            // 创建画廊项元素
+            const galleryItem = document.createElement('div');
+            galleryItem.className = 'gallery-item';
+            galleryItem.style = `
+                background-color: white;
+                border: 1px solid #E0E0E0;
+                border-radius: 5px;
+                padding: 10px;
+                text-align: center;
+                transition: all 0.3s ease;
+                opacity: 0;
+                transform: translateY(10px);
+            `;
+            
+            galleryItem.innerHTML = `
+                <div style="position: relative; width: 100%; height: 150px; overflow: hidden; border-radius: 5px; margin-bottom: 10px; cursor: pointer;" class="gallery-image-container">
+                    <img src="${newItem.url}" alt="作品${newItem.id}" style="width: 100%; height: 100%; object-fit: contain; background-color: #f5f5f5;">
+                </div>
+                <div style="font-size: 12px; color: #666;">${newItem.date}</div>
+            `;
+            
+            // 添加到画廊
+            galleryGrid.appendChild(galleryItem);
+            
+            // 添加淡入动画
+            setTimeout(() => {
+                galleryItem.style.opacity = '1';
+                galleryItem.style.transform = 'translateY(0)';
+                
+                // 添加图片点击事件
+                const imageContainer = galleryItem.querySelector('.gallery-image-container');
+                if (imageContainer) {
+                    imageContainer.addEventListener('click', function() {
+                        const img = this.querySelector('img');
+                        if (img) {
+                            openImageModal(img.src);
+                        }
+                    });
+                }
+            }, 100);
+        }
+        
+        // 显示上传进度
+        function showProgress() {
+            const progressContainer = document.getElementById('upload-progress');
+            const errorContainer = document.getElementById('upload-error');
+            
+            if (progressContainer) {
+                progressContainer.style.display = 'block';
+            }
+            
+            if (errorContainer) {
+                errorContainer.style.display = 'none';
+            }
+            
+            updateProgress(0);
+        }
+        
+        // 隐藏上传进度
+        function hideProgress() {
+            const progressContainer = document.getElementById('upload-progress');
+            if (progressContainer) {
+                progressContainer.style.display = 'none';
+            }
+        }
+        
+        // 更新上传进度
+        function updateProgress(percentage) {
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            
+            if (progressBar && progressText) {
+                progressBar.style.width = `${percentage}%`;
+                progressText.textContent = `${percentage}%`;
+            }
+        }
+        
+        // 显示错误信息
+        function showError(message) {
+            const errorContainer = document.getElementById('upload-error');
+            if (errorContainer) {
+                errorContainer.textContent = message;
+                errorContainer.style.display = 'block';
+            }
+        }
+        
+        // 显示成功信息
+        function showSuccess(message) {
+            alert(message);
+        }
+        
+        // 动态更新访客计数器
+        function updateVisitorCount() {
+            const countElement = document.getElementById('visitor-count');
+            let count = parseInt(countElement.textContent);
+            count++;
+            countElement.textContent = count.toString().padStart(6, '0');
+        }
+        
+        // 为标题添加随机装饰字符
+        function addDecorativeChars() {
+            const decorativeElements = document.querySelectorAll('.header .decorative');
+            const decorativeChars = ['★', '☆', '♪', '♫', '♠', '♥', '♦', '♣', '♯', '♭'];
+            
+            decorativeElements.forEach(element => {
+                let decorativeText = '';
+                for (let i = 0; i < 2; i++) {
+                    const randomChar = decorativeChars[Math.floor(Math.random() * decorativeChars.length)];
+                    decorativeText += randomChar;
+                }
+                element.textContent = decorativeText;
+            });
+        }
+        
+        // 为所有链接添加平滑过渡效果
+        document.querySelectorAll('a').forEach(link => {
+            link.style.transition = 'all 0.3s ease';
+        });
+    </script>
+</body>
+</html>
