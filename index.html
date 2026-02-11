@@ -13,11 +13,33 @@
         
         body {
             font-family: Arial, sans-serif;
-            background-color: #E0F7FA;
-            background-image: radial-gradient(#FFFFFF 2px, transparent 2px);
-            background-size: 20px 20px;
+            background-color: transparent;
             color: #333;
             line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* 背景容器 */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 1;
+            /* 100%透明度 */
+        }
+        
+        /* 背景图片 */
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 保持图片原始状态，不进行任何裁剪、缩放或滤镜等修改操作 */
         }
         
         .container {
@@ -91,6 +113,11 @@
             text-align: center;
             margin-bottom: 20px;
             position: relative;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #E0E0E0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
         
         .header h1 {
@@ -109,7 +136,7 @@
         .header .subtitle {
             font-size: 14px;
             color: #666;
-            margin-bottom: 15px;
+            margin-bottom: 0;
         }
         
         /* 欢迎信息栏 */
@@ -242,6 +269,50 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
+        /* 背景音乐播放器 */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(255, 243, 224, 0.9);
+            border: 2px solid #FF5252;
+            border-radius: 50px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .music-player:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .music-button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #FF5252;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .music-button:hover {
+            transform: scale(1.1);
+        }
+        
+        .music-info {
+            font-size: 12px;
+            color: #333;
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
         /* 响应式设计 */
         @media (max-width: 768px) {
             .container {
@@ -262,10 +333,36 @@
                 margin-right: 0;
                 margin-bottom: 15px;
             }
+            
+            .music-player {
+                bottom: 10px;
+                right: 10px;
+                padding: 8px 15px;
+            }
+            
+            .music-info {
+                max-width: 150px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- 背景容器 -->
+    <div class="background-container">
+        <!-- 背景图片 -->
+        <img class="background-image" src="https://raw.githubusercontent.com/memegif777/memegif777.github.io/main/DA7F72B1E0823683C6FDCF9AB1C71E2C.jpeg" alt="背景图片">
+    </div>
+    
+    <!-- 背景音乐播放器 -->
+    <div class="music-player">
+        <button class="music-button" id="music-button">♪</button>
+        <div class="music-info">HoneyWorks & かぐや - 私は、わたしの事が好き。</div>
+        <audio id="background-music" loop>
+            <source src="https://raw.githubusercontent.com/memegif777/memegif777.github.io/main/HoneyWorks%20%26%20%E3%81%8B%E3%81%90%E3%82%84(cv.%E5%A4%8F%E5%90%89%E3%82%86%E3%81%86%E3%81%93)%20-%20%E7%A7%81%E3%81%AF%E3%80%81%E3%82%8F%E3%81%9F%E3%81%97%E3%81%AE%E4%BA%8B%E3%81%8C%E5%A5%BD%E3%81%8D%E3%80%82.mp3" type="audio/mpeg">
+            您的浏览器不支持音频元素。
+        </audio>
+    </div>
+    
     <div class="container">
         <!-- 左侧导航栏 -->
         <div class="sidebar">
@@ -310,7 +407,7 @@
                 
                 <div class="content-card">
                     <div class="left">
-                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20cartoon%20rabbit%20in%20underwater%20scene%20with%20coral%20and%20fish%2C%20speech%20bubble%20saying%20%22eight%20thousand%20generations%20cabin%22%2C%20anime%20style%2C%20light%20blue%20background&image_size=square" alt="八千代的小屋">
+                        <img src="https://raw.githubusercontent.com/memegif777/memegif777.github.io/main/DA7F72B1E0823683C6FDCF9AB1C71E2C.jpeg" alt="八千代的小屋">
                     </div>
                     <div class="right">
                         <ul>
@@ -788,6 +885,98 @@
         document.querySelectorAll('a').forEach(link => {
             link.style.transition = 'all 0.3s ease';
         });
+        
+        // 初始化背景音乐播放器
+        function initMusicPlayer() {
+            const music = document.getElementById('background-music');
+            const musicButton = document.getElementById('music-button');
+            let hasInteracted = false;
+            
+            if (music && musicButton) {
+                // 设置音量为20%（现有音量的50%左右）
+                music.volume = 0.2;
+                
+                // 播放/暂停切换函数
+                function toggleMusic() {
+                    if (music.paused) {
+                        music.play().catch(error => {
+                            console.log('播放失败:', error);
+                        });
+                        musicButton.textContent = '♫';
+                    } else {
+                        music.pause();
+                        musicButton.textContent = '♪';
+                    }
+                }
+                
+                // 音乐按钮点击事件
+                musicButton.addEventListener('click', toggleMusic);
+                
+                // 页面点击事件 - 首次点击尝试自动播放
+                function handleFirstInteraction() {
+                    if (!hasInteracted) {
+                        hasInteracted = true;
+                        music.play().catch(error => {
+                            console.log('自动播放失败:', error);
+                        });
+                        musicButton.textContent = '♫';
+                        // 移除事件监听器，只执行一次
+                        document.removeEventListener('click', handleFirstInteraction);
+                        document.removeEventListener('touchstart', handleFirstInteraction);
+                    }
+                }
+                
+                // 添加首次交互事件监听器
+                document.addEventListener('click', handleFirstInteraction);
+                document.addEventListener('touchstart', handleFirstInteraction);
+                
+                // 音乐结束时自动循环（虽然已经在HTML中设置了loop属性，但为了保险起见）
+                music.addEventListener('ended', function() {
+                    music.currentTime = 0;
+                    music.play().catch(error => {
+                        console.log('循环播放失败:', error);
+                    });
+                });
+            }
+        }
+        
+        // 鼠标移动视差效果
+        function initParallaxEffect() {
+            // 获取背景图片元素
+            const backgroundImage = document.querySelector('.background-image');
+            
+            if (backgroundImage) {
+                // 鼠标移动事件监听
+                document.addEventListener('mousemove', function(e) {
+                    // 获取鼠标在页面上的位置
+                    const mouseX = e.clientX;
+                    const mouseY = e.clientY;
+                    
+                    // 获取窗口尺寸
+                    const windowWidth = window.innerWidth;
+                    const windowHeight = window.innerHeight;
+                    
+                    // 计算鼠标位置在窗口中的相对位置（-0.5到0.5之间）
+                    const xPos = (mouseX / windowWidth) - 0.5;
+                    const yPos = (mouseY / windowHeight) - 0.5;
+                    
+                    // 控制移动幅度，设置最大移动距离为50px
+                    // 移动幅度需控制在视觉舒适范围内，不影响页面主体内容的稳定性
+                    const maxMove = 50;
+                    const moveX = xPos * maxMove;
+                    const moveY = yPos * maxMove;
+                    
+                    // 应用移动效果
+                    backgroundImage.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                });
+            }
+        }
+        
+        // 初始化背景音乐播放器
+        initMusicPlayer();
+        
+        // 初始化鼠标移动视差效果
+        initParallaxEffect();
     </script>
 </body>
 </html>
