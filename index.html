@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>八千代的小屋</title>
+    <audio src="https://raw.githubusercontent.com/memegif777/memegif777.github.io/main/HoneyWorks%20&%20かぐや(cv.夏吉ゆうこ)%20-%20私は、わたしの事が好き。.mp3" autoplay loop></audio>
     <style>
         * {
             margin: 0;
@@ -13,9 +14,8 @@
         
         body {
             font-family: Arial, sans-serif;
-            background-color: #E0F7FA;
-            background-image: radial-gradient(#FFFFFF 2px, transparent 2px);
-            background-size: 20px 20px;
+            background: url('https://raw.githubusercontent.com/memegif777/memegif777.github.io/main/DA7F72B1E0823683C6FDCF9AB1C71E2C.jpeg') no-repeat center center fixed;
+            background-size: cover;
             color: #333;
             line-height: 1.6;
         }
@@ -85,8 +85,11 @@
         }
         
         .header {
+            background-color: #26A69A;
+            color: #ffffff;
             text-align: center;
             margin-bottom: 20px;
+            border-radius: 5px;
             position: relative;
         }
         
@@ -185,6 +188,9 @@
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             padding: 20px;
+        }
+        .announcement {
+            border-radius: 15px;
         }
         
         .announcement h3 {
@@ -292,6 +298,134 @@
             border: 1px solid #ef9a9a;
         }
         
+        .upload-area {
+            border: 3px dashed #e0e0e0;
+            border-radius: 12px;
+            padding: 48px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 20px;
+        }
+        
+        .upload-area:hover {
+            border-color: #ff5252;
+            background: #fff3e0;
+        }
+        
+        .upload-area-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+        
+        .upload-area-text {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .upload-area-subtext {
+            color: #999;
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+        
+        #file-input {
+            display: none;
+        }
+        
+        .preview-container {
+            margin-top: 16px;
+            text-align: center;
+        }
+        
+        .preview-image {
+            max-height: 256px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #ff5252 0%, #ff9800 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 82, 82, 0.3);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-secondary {
+            background: #26a69a;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #00897b;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff5252;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 16px;
+        }
+        
         @media (max-width: 1024px) {
             .gallery-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -342,8 +476,8 @@
                 <li><a href="#" data-section="bbs">绘板 / BBS</a></li>
                 <li><a href="#" data-section="links">链接</a></li>
                 <li><a href="#" data-section="diary">草 diary</a></li>
+                <li><a href="#" data-section="music">🎵 音乐</a></li>
                 <li><a href="#" data-section="others">其他链接</a></li>
-                <li><a href="collaborate.html">🎨 协作编辑</a></li>
             </ul>
             <div class="footer">
                 <p>欢迎光临！本站点站长「八千代」运营，是一个以二次创作为主的插画交流网站</p>
@@ -361,7 +495,7 @@
             </div>
             
             <div class="welcome-bar">
-                擅自转载使用本站内容 ★★★★★ 您是第 <span id="visitor-count">000650</span> 位访客！
+                 擅自转载使用本站内容 ★★★★★ 当前页面浏览量（PV）：<span id="visitor-count">000000</span>
             </div>
             
             <div id="message-container"></div>
@@ -415,6 +549,118 @@
             }, 5000);
         }
         
+        function setupFileInput() {
+            const fileInput = document.getElementById('file-input');
+            if (fileInput) {
+                fileInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        selectedFile = file;
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const previewImage = document.getElementById('preview-image');
+                            const uploadPreview = document.getElementById('upload-preview');
+                            const uploadPlaceholder = document.getElementById('upload-placeholder');
+                            if (previewImage && uploadPreview && uploadPlaceholder) {
+                                previewImage.src = e.target.result;
+                                uploadPreview.style.display = 'block';
+                                uploadPlaceholder.style.display = 'none';
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+        }
+        
+        async function uploadImage() {
+            const tokenInput = document.getElementById('github-token');
+            const token = tokenInput ? tokenInput.value : '';
+            if (!selectedFile || !token) {
+                showMessage('请选择图片并填写 GitHub Token', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('upload-btn');
+            if (btn) {
+                btn.disabled = true;
+                btn.textContent = '上传中...';
+            }
+
+            try {
+                const reader = new FileReader();
+                reader.onload = async function(e) {
+                    const base64Data = e.target.result.split(',')[1];
+                    const fileName = `upload-${Date.now()}-${selectedFile.name}`;
+
+                    const response = await fetch(
+                        `https://api.github.com/repos/memegif777/memegif777.github.io/contents/assets/${fileName}`,
+                        {
+                            method: 'PUT',
+                            headers: {
+                                'Authorization': `token ${token}`,
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                message: `上传图片: ${fileName}`,
+                                content: base64Data,
+                            }),
+                        }
+                    );
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        const downloadUrl = `https://raw.githubusercontent.com/memegif777/memegif777.github.io/main/assets/${fileName}`;
+                        
+                        try {
+                            const backendResponse = await fetch('http://localhost:3000/api/photos', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    githubUrl: downloadUrl,
+                                    name: fileName
+                                })
+                            });
+                            
+                            if (backendResponse.ok) {
+                                console.log('图片信息已同步到后端数据库');
+                            } else {
+                                console.warn('后端同步失败，但图片已成功上传到GitHub');
+                            }
+                        } catch (backendError) {
+                            console.warn('后端同步出错，但图片已成功上传到GitHub:', backendError);
+                        }
+                        
+                        showMessage('图片上传成功！', 'success');
+                        selectedFile = null;
+                        const uploadPreview = document.getElementById('upload-preview');
+                        const uploadPlaceholder = document.getElementById('upload-placeholder');
+                        const fileInput = document.getElementById('file-input');
+                        if (uploadPreview) uploadPreview.style.display = 'none';
+                        if (uploadPlaceholder) uploadPlaceholder.style.display = 'block';
+                        if (fileInput) fileInput.value = '';
+                        await loadImagesFromGithub();
+                    } else {
+                        const error = await response.json();
+                        showMessage(`上传失败: ${error.message}`, 'error');
+                    }
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.textContent = '🚀 上传到 GitHub';
+                    }
+                };
+                reader.readAsDataURL(selectedFile);
+            } catch (error) {
+                showMessage('上传出错了', 'error');
+                if (btn) {
+                    btn.disabled = false;
+                    btn.textContent = '🚀 上传到 GitHub';
+                }
+            }
+        }
+        
         window.addEventListener('load', function() {
             updateVisitorCount();
             addDecorativeChars();
@@ -465,21 +711,61 @@
             const mainContent = document.querySelector('.main-content');
             
             switch(section) {
+                case 'music':
+                    mainContent.innerHTML = `
+                        <div class="card">
+                            <h2 style="text-align: center; margin-bottom: 30px;">🎵 音乐播放</h2>
+                            <div style="text-align: center; margin-bottom: 30px;">
+                                <h3 style="margin-bottom: 20px;">HoneyWorks & かぐや(cv.夏吉ゆうこ) - 私は、わたしの事が好き。</h3>
+                                <div style="display: flex; justify-content: center; gap: 20px;">
+                                    <button class="btn btn-primary" onclick="playMusic()">▶ 播放</button>
+                                    <button class="btn btn-secondary" onclick="pauseMusic()">⏸ 暂停</button>
+                                </div>
+                            </div>
+                            <div style="text-align: center; color: #666; font-size: 0.9rem;">
+                                <p>🎵 点击按钮控制音乐播放</p>
+                                <p>📝 音乐文件来自 GitHub 仓库</p>
+                            </div>
+                        </div>
+                    `;
+                    break;
                 case 'gallery':
                     mainContent.innerHTML = `
                         <div class="gallery-container">
                             <h2 style="text-align: center; margin-bottom: 20px;">画廊</h2>
-                            <div style="text-align: right; margin-bottom: 20px;">
-                                <button onclick="location.href='collaborate.html'" style="background-color: #FF5252; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">
-                                    🎨 协作上传图片
+                            
+                            <input type="hidden" id="github-token" value="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">
+                            
+                            <div class="card">
+                                <h2>📷 上传图片</h2>
+                                <div class="upload-area" onclick="document.getElementById('file-input').click()">
+                                    <div id="upload-preview" class="preview-container" style="display: none;">
+                                        <img id="preview-image" class="preview-image">
+                                        <p style="color: #666;">点击更换图片</p>
+                                    </div>
+                                    <div id="upload-placeholder">
+                                        <div class="upload-area-icon">🖼️</div>
+                                        <div class="upload-area-text">点击选择或拖拽图片到这里</div>
+                                        <div class="upload-area-subtext">支持 JPG, PNG, GIF, WebP</div>
+                                    </div>
+                                </div>
+                                <input type="file" id="file-input" accept="image/*">
+                                <button class="btn btn-primary" style="width: 100%; margin-top: 16px;" onclick="uploadImage()" id="upload-btn">
+                                    🚀 上传到 GitHub
                                 </button>
                             </div>
+                            
+                            <div style="text-align: right; margin-bottom: 20px;">
+                                <button class="btn btn-secondary" onclick="loadImagesFromGithub()">📂 刷新图片</button>
+                            </div>
+                            
                             <div id="gallery-grid" class="gallery-grid">
                                 <div class="gallery-placeholder">加载中...</div>
                             </div>
                         </div>
                     `;
                     
+                    setupFileInput();
                     loadImagesFromGithub();
                     break;
                 default:
@@ -513,8 +799,17 @@
             grid.innerHTML = '<div class="gallery-placeholder">加载中...</div>';
 
             try {
+                const tokenInput = document.getElementById('github-token');
+                const token = tokenInput ? tokenInput.value : '';
+                
+                const headers = {};
+                if (token) {
+                    headers['Authorization'] = `token ${token}`;
+                }
+
                 const response = await fetch(
-                    'https://api.github.com/repos/memegif777/memegif777.github.io/contents/assets'
+                    'https://api.github.com/repos/memegif777/memegif777.github.io/contents/assets',
+                    { headers }
                 );
 
                 if (response.ok) {
@@ -527,7 +822,7 @@
                     grid.innerHTML = '';
 
                     if (imageFiles.length === 0) {
-                        grid.innerHTML = '<div class="gallery-placeholder">仓库中暂无图片，点击上方按钮去上传！</div>';
+                        grid.innerHTML = '<div class="gallery-placeholder">仓库中暂无图片，点击上方上传！</div>';
                         return;
                     }
 
@@ -555,8 +850,13 @@
         
         function updateVisitorCount() {
             const countElement = document.getElementById('visitor-count');
-            let count = parseInt(countElement.textContent);
+            // 从本地存储获取当前计数，如果没有则初始化为0
+            let count = parseInt(localStorage.getItem('pvCount')) || 0;
+            // 自增计数
             count++;
+            // 保存到本地存储
+            localStorage.setItem('pvCount', count);
+            // 显示计数
             countElement.textContent = count.toString().padStart(6, '0');
         }
         
@@ -572,6 +872,22 @@
                 }
                 element.textContent = decorativeText;
             });
+        }
+        
+        function playMusic() {
+            const audio = document.querySelector('audio');
+            if (audio) {
+                audio.play().catch(error => {
+                    showMessage('音乐播放需要用户交互，请先点击页面再播放', 'error');
+                });
+            }
+        }
+        
+        function pauseMusic() {
+            const audio = document.querySelector('audio');
+            if (audio) {
+                audio.pause();
+            }
         }
         
         document.querySelectorAll('a').forEach(link => {
